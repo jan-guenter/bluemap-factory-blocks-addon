@@ -1,14 +1,17 @@
 # BlueMap Factory Blocks Add-on
 
+[![CI](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml)
+
 An exact-profile BlueMap 5.22 add-on for the Athena-backed connected models in
 Factory Blocks as shipped by All the Mons 1.2.0.
 
 ## Status
 
-Version `0.1.0-alpha.1` is an unreleased prototype candidate. Its exact
-profile generation, focused Java/Python tests, disposable staging render, and
-owner visual review are separate evidence gates. It is not published and is
-not a production deployment.
+Version `0.1.0-alpha.1` is the owner-accepted prerelease candidate. Its exact
+production JAR is 86,501 bytes with SHA-256
+`69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302`.
+The disposable staging render and matching modded-client comparison were
+accepted on 2026-08-20. Publication does not deploy it to a Minecraft server.
 
 The only supported input tuple is:
 
@@ -57,8 +60,10 @@ whole block.
 
 The deliberately small [gallery](gallery/README.md) covers a disconnected CTM
 block, a CTM 3×3 wall, every giant south-face role in one 3×3 wall, connected
-animated gears, and two stock controls. Gallery generation is complete;
-runtime and visual results must be recorded only after staging.
+animated gears, and two stock controls. Its reproducible ZIP is exactly 3,707
+bytes with SHA-256
+`cbea339239d7ddcfd2a771de204d64ba63e1941d28e74416c51919c32888e25b`.
+All three retained-placement phases passed 26/26 checks with zero failures.
 
 ## Build
 
@@ -74,6 +79,11 @@ gradle --no-daemon \
 ```
 
 The exact release gate is documented in [docs/RELEASING.md](docs/RELEASING.md).
+It proves the production and sources JARs plus Maven metadata byte-for-byte,
+rechecks the exact Factory Blocks/Athena inputs, and reproduces the accepted
+gallery archive. Tagged releases use Maven coordinate
+`io.github.jan-guenter:bluemap-factory-blocks-addon:<version>`; the annotated
+tag must equal `v<addon_version>`.
 
 ## Installation
 

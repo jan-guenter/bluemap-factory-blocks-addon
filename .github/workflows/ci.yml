@@ -1,0 +1,169 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PROMOTION_JAVA_VERSION: '21.0.12+8.0.LTS'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Check out add-on
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Read final release version
+        id: version
+        shell: bash
+        run: |
+          version="$(sed -n 's/^addon_version=//p' gradle.properties)"
+          test -n "${version}"
+          [[ "${version}" != *-SNAPSHOT ]]
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Check out exact BlueMap backport
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: jan-guenter/BlueMap
+          ref: 9be321df995a1103808621d529eb72773e719d4d
+          path: .ci/bluemap
+          submodules: recursive
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify exact detached BlueMap identities
+        run: |
+          test "$(git -C .ci/bluemap rev-parse --abbrev-ref HEAD)" = "HEAD"
+          test "$(git -C .ci/bluemap rev-parse HEAD)" = \
+            "9be321df995a1103808621d529eb72773e719d4d"
+          test "$(git -C .ci/bluemap/api rev-parse HEAD)" = \
+            "285c9a60eff3ac2b0cab308ce1058d1565be0971"
+          git -C .ci/bluemap fetch --force --tags origin
+          test "$(git -C .ci/bluemap describe --exact-match --tags HEAD)" = \
+            "v5.22-agent.backport-5.22-mc1.21.1-2"
+
+      - name: Set up exact promotion Java 21
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: ${{ env.PROMOTION_JAVA_VERSION }}
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: Set up Gradle 9.6.1
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          gradle-version: '9.6.1'
+          cache-provider: basic
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+          validate-wrappers: true
+
+      - name: Acquire exact ephemeral Factory Blocks inputs
+        run: |
+          input_dir="${RUNNER_TEMP}/factory-blocks-input"
+          mkdir -p "${input_dir}"
+          curl --fail --location --retry 3 --retry-all-errors \
+            --output "${input_dir}/factory_blocks-neoforge-1.4.0+mc1.21.1.jar" \
+            "https://www.curseforge.com/api/v1/mods/640001/files/6266334/download"
+          curl --fail --location --retry 3 --retry-all-errors \
+            --output "${input_dir}/athena-neoforge-1.21.1-4.0.6.jar" \
+            "https://www.curseforge.com/api/v1/mods/841890/files/8061947/download"
+          test "$(stat -c %s "${input_dir}/factory_blocks-neoforge-1.4.0+mc1.21.1.jar")" \
+            -eq 809234
+          test "$(stat -c %s "${input_dir}/athena-neoforge-1.21.1-4.0.6.jar")" \
+            -eq 99944
+          sha256sum --check <<SHA256SUMS
+          404080fcf4747c6d84b73d1c204d047408aae476f57752bc5f38e9c16c7f51cd  ${input_dir}/factory_blocks-neoforge-1.4.0+mc1.21.1.jar
+          43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5  ${input_dir}/athena-neoforge-1.21.1-4.0.6.jar
+          SHA256SUMS
+          python3 tools/verify_pinned_artifacts.py \
+            --factory_blocks "${input_dir}/factory_blocks-neoforge-1.4.0+mc1.21.1.jar" \
+            --athena "${input_dir}/athena-neoforge-1.21.1-4.0.6.jar"
+
+      - name: Verify gallery and provenance inputs
+        run: |
+          python3 -m json.tool provenance/upstreams.json >/dev/null
+          python3 -m json.tool provenance/release.json >/dev/null
+          python3 gallery/generate.py --check
+          python3 gallery/lint.py
+          (cd gallery && sha256sum --check SHA256SUMS)
+          bash gallery/package.sh "${RUNNER_TEMP}/gallery-first.zip"
+          bash gallery/package.sh "${RUNNER_TEMP}/gallery-second.zip"
+          cmp "${RUNNER_TEMP}/gallery-first.zip" \
+            "${RUNNER_TEMP}/gallery-second.zip"
+          test "$(stat -c %s "${RUNNER_TEMP}/gallery-first.zip")" -eq 3707
+          sha256sum --check <<SHA256SUMS
+          cbea339239d7ddcfd2a771de204d64ba63e1941d28e74416c51919c32888e25b  ${RUNNER_TEMP}/gallery-first.zip
+          SHA256SUMS
+
+      - name: Build and verify final release candidate
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          input_dir="${RUNNER_TEMP}/factory-blocks-input"
+          gradle --no-daemon \
+            -PbluemapSourcePath=.ci/bluemap \
+            -PfactoryBlocksJar="${input_dir}/factory_blocks-neoforge-1.4.0+mc1.21.1.jar" \
+            -PathenaJar="${input_dir}/athena-neoforge-1.21.1-4.0.6.jar" \
+            "-PreleaseTag=v${VERSION}" \
+            clean check build generatePomFileForAddonPublication \
+            generateMetadataFileForAddonPublication \
+            verifyPublicationArtifacts verifyReleaseCandidate
+          test "$(stat -c %s \
+            "build/libs/bluemap-factory-blocks-addon-${VERSION}.jar")" -eq 86501
+          test "$(stat -c %s \
+            "build/libs/bluemap-factory-blocks-addon-${VERSION}-sources.jar")" \
+            -eq 51485
+          test "$(stat -c %s build/publications/addon/pom-default.xml)" -eq 1373
+          test "$(stat -c %s build/publications/addon/module.json)" -eq 2866
+          sha256sum --check <<SHA256SUMS
+          69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302  build/libs/bluemap-factory-blocks-addon-${VERSION}.jar
+          c94167752f16ddc6b5f3bf9c711ca719dcedb1a9bb437fc8b9e65f3149072613  build/libs/bluemap-factory-blocks-addon-${VERSION}-sources.jar
+          eb1a67ad49ba54f28ea28fa10966fc30f1913f294ef20c861881596247b6f300  build/publications/addon/pom-default.xml
+          14cb9927206ce573f4af4306adced9e2167c9194402131973629cc4a7b2479bb  build/publications/addon/module.json
+          SHA256SUMS
+          python3 tools/verify_staged_equivalence.py \
+            --jar "build/libs/bluemap-factory-blocks-addon-${VERSION}.jar" \
+            --entries provenance/accepted-staging-entries.sha256
+
+      - name: Upload review outputs
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bluemap-factory-blocks-${{ github.sha }}
+          path: |
+            build/libs/*.jar
+            build/publications/addon/pom-default.xml
+            build/publications/addon/module.json
+            build/reports/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload failed-build diagnostics
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bluemap-factory-blocks-failure-${{ github.sha }}
+          path: |
+            build/libs/*.jar
+            build/publications/addon/*.xml
+            build/publications/addon/*.json
+            build/reports/**
+          if-no-files-found: warn
+          retention-days: 3

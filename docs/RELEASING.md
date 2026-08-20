@@ -1,7 +1,8 @@
 # Release procedure
 
-No release exists. Owner visual acceptance of the exact staged candidate is
-required before any publication work.
+Releases are promoted only from an owner-accepted, independently audited
+commit on `main`. The accepted candidate identity is recorded in
+`provenance/release.json`.
 
 ## Clean gate
 
@@ -13,8 +14,10 @@ python3 -B -m unittest discover -s tools/tests -v
 gradle --no-daemon \
   -PfactoryBlocksJar=/absolute/path/factory_blocks-neoforge-1.4.0+mc1.21.1.jar \
   -PathenaJar=/absolute/path/athena-neoforge-1.21.1-4.0.6.jar \
+  -PreleaseTag=v0.1.0-alpha.1 \
   clean check build generatePomFileForAddonPublication \
-  generateMetadataFileForAddonPublication verifyPinnedArtifacts
+  generateMetadataFileForAddonPublication verifyPublicationArtifacts \
+  verifyReleaseCandidate
 ```
 
 Inspect the production and sources JARs. Reject NeoForge metadata, nested
@@ -27,7 +30,12 @@ Run [STAGING.md](STAGING.md) against that exact JAR, open the intended BlueMap
 link for the required lightweight sanity check, and obtain explicit owner
 acceptance. Do not substitute a rebuilt JAR afterward.
 
-Before tagging, confirm the clean reviewed commit, pull-request version
-change, tag `v<addon_version>`, release assets, Maven coordinates, checksums,
-and provenance. Publication deploys nothing to the Minecraft server and must
-not move an existing tag or replace immutable assets.
+Before tagging, merge the independently audited release pull request. Create
+and push an annotated `v<addon_version>` tag at that reviewed `main` commit.
+The release workflow reproduces every accepted byte, creates a draft
+prerelease, uploads and attests the assets, publishes the Maven package,
+verifies the draft assets, and only then makes the prerelease public.
+
+Never reuse or move a release tag. A failed prepublication run may be resumed
+with the workflow's exact immutable tag input while its GitHub release remains
+a draft. Publication deploys nothing to the Minecraft server.
