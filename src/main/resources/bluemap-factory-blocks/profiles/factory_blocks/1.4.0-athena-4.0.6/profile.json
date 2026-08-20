@@ -1,0 +1,51 @@
+{
+  "athenaVersion": "4.0.6",
+  "coverage": {
+    "animatedTextureCount": 5,
+    "loaderCounts": {
+      "ctm": 32,
+      "giant": 3
+    },
+    "loaderDigests": {
+      "ctm": "7f738459b75909a5b755c595cdaf1c5c86df788ad71c058ab62b982837a33cb2",
+      "giant": "9f07a3f7f037a6be1c686bb5d0ac33afcec853c49dc88e8861adc0aa85f07892"
+    },
+    "modelCount": 35,
+    "modelDigest": "6156c92752e03a69c58e6a60966d1bd095c773839de7f4106dfa18ca2e5cc235",
+    "pngCount": 190,
+    "registeredBlocks": 49,
+    "resourceBlockstates": 52,
+    "resourceBlockstatesDigest": "ef9e89d25ef6c1f2043a6a43ff9afe678f67e766f2a257785f016f135ab598e3",
+    "resourceManifestSha256": "f5bca2172149b885ac3b4899c4ede36629adbd8605ae80dd385cbde79b9d1873",
+    "resourcePathCount": 260,
+    "roleTextureCount": 190,
+    "roleTextureDigest": "2eb455934a794181f8f49e8a03752bb79f1856e59b5ceb7e7f36843132bf61b0",
+    "routedBlocks": 35,
+    "routedBlocksDigest": "3824bb95f66d5110688a63e77c14127d333bd5f0c109d958417aa01be9239c94",
+    "stockRegisteredBlocks": 14,
+    "unregisteredResourceBlockstates": 3
+  },
+  "definitionCatalog": {
+    "path": "definitions.tsv",
+    "rows": 35,
+    "sha256": "3a5f6ecd5901875ffda10e232d35ce3839f3a098d17aeea93de1095c8bda900e"
+  },
+  "factoryBlocksVersion": "1.4.0+mc1.21.1",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.248",
+  "profileId": "factory-blocks-athena-1.4.0-4.0.6",
+  "resourceClosure": {
+    "bytes": 115044,
+    "path": "required-resources.tsv",
+    "rows": 260,
+    "sha256": "f5bca2172149b885ac3b4899c4ede36629adbd8605ae80dd385cbde79b9d1873"
+  },
+  "runtimePolicy": {
+    "animation": "deterministic first frame; playback excluded",
+    "nonNativeAppearanceProxies": "stock fallback",
+    "pixelOverrides": "allowed when all schema and texture IDs remain exact",
+    "resourceSource": "operator-installed roots only",
+    "schemaOverrides": "deactivate the route and preserve stock rendering"
+  },
+  "schemaVersion": 1
+}

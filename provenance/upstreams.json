@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "project_license": "MIT",
+  "status": "unreleased-prototype-runtime-pending",
+  "implementation_lane": "mit-chisel-adaptation-plus-resource-interpreter",
+  "baseline": {
+    "pack": "All the Mons 1.2.0",
+    "pack_commit": "c7bb230f21d14d26859d0b92548f089b3a493ad9",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.248",
+    "java": 21
+  },
+  "bluemap": {
+    "backport_version": "5.22-agent.backport-5.22-mc1.21.1-2",
+    "backport_commit": "9be321df995a1103808621d529eb72773e719d4d",
+    "release_jar_sha256": "749f7647fa29764cea113114a7ab3259271bab3da22720989f2bd9fd1f3ba150",
+    "declared_license": "MIT",
+    "bundled": false
+  },
+  "implementation_source": {
+    "name": "BlueMap Chisel Add-on",
+    "repository": "https://github.com/jan-guenter/bluemap-chisel-addon",
+    "tag": "v0.1.0-alpha.1",
+    "tag_target": "f9131a5143062e2045cf26823aabb8628bb5d94d",
+    "declared_license": "MIT",
+    "role": "direct implementation source adapted and specialized",
+    "binary_bundled": false,
+    "assets_bundled": false
+  },
+  "artifacts": {
+    "factory_blocks": {
+      "version": "1.4.0+mc1.21.1",
+      "file_name": "factory_blocks-neoforge-1.4.0+mc1.21.1.jar",
+      "size": 809234,
+      "sha1": "51fa93c3b0978f4f7e3b801bea6822ec72522e50",
+      "sha256": "404080fcf4747c6d84b73d1c204d047408aae476f57752bc5f38e9c16c7f51cd",
+      "sha512": "2273baa299f4f829a2f17f5409a8f206aad87abef65f62e3d20c63be85281f217f64f2ecaed60063fa8c8a457ec6d63eb40778dec3c318af5a70741704b43cc1",
+      "curseforge_project_id": 640001,
+      "curseforge_file_id": 6266334,
+      "exact_jar_license": "MIT",
+      "distribution_metadata_conflict": "current CurseForge page says All Rights Reserved",
+      "source_use_lane": "independently-authored/resource-interpreter",
+      "bundled": false
+    },
+    "athena": {
+      "version": "4.0.6",
+      "file_name": "athena-neoforge-1.21.1-4.0.6.jar",
+      "size": 99944,
+      "sha1": "4bcbdf388bd5e387beca7c627224aac33584b55b",
+      "sha256": "43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5",
+      "sha512": "ab40a306a26ce834daae921a1e87768cd2538a4bfe27a4480f97af854084cc334e7416b1bd0b7583834a32a86951283f29fd4b1df7b98a967a6b26a3ec05e2cf",
+      "curseforge_project_id": 841890,
+      "curseforge_file_id": 8061947,
+      "declared_license": "MIT",
+      "source_use_lane": "artifact-format-identity-and-runtime-resources-only",
+      "bundled": false
+    }
+  },
+  "source_evidence": {
+    "factory_blocks": {
+      "repository": "https://github.com/matthewperiut/FactoryBlocks-Reborn",
+      "tag": "1.21.1-1.4.0",
+      "commit": "c4fb3667688ed7b0498575c1f0c83f8ff9f45237",
+      "status": "exact-correlated-evidence-not-adapted"
+    }
+  },
+  "coverage": {
+    "registered_blocks": 49,
+    "resource_blockstates": 52,
+    "routed_blocks": 35,
+    "ctm_blocks": 32,
+    "giant_3x3_blocks": 3,
+    "stock_registered_blocks": 14,
+    "unregistered_resource_blockstates": 3,
+    "blockstate_resources": 35,
+    "model_resources": 35,
+    "role_png_resources": 190,
+    "resource_closure_paths": 260,
+    "resource_manifest_sha256": "f5bca2172149b885ac3b4899c4ede36629adbd8605ae80dd385cbde79b9d1873",
+    "animated_first_frame_keys": 5
+  },
+  "excluded_artifacts": {
+    "ctm": "evidence-only",
+    "chisel_content": "evidence-only"
+  },
+  "third_party_code_bundled": false,
+  "third_party_assets_bundled": false
+}

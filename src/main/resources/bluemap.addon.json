@@ -1,0 +1,8 @@
+{
+  "id": "bluemap-factory-blocks",
+  "name": "BlueMap Factory Blocks Add-on",
+  "entrypoint": "io.github.janguenter.bluemap.factoryblocks.BlueMapFactoryBlocksAddon",
+  "version": "${version}",
+  "dependencies": [],
+  "soft-dependencies": []
+}

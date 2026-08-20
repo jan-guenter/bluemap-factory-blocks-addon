@@ -1,0 +1,46 @@
+{
+  "artifacts": [
+    {
+      "curseForgeFileId": 6266334,
+      "curseForgeProjectId": 640001,
+      "filename": "factory_blocks-neoforge-1.4.0+mc1.21.1.jar",
+      "licenseDeclaration": "MIT in exact NeoForge descriptor",
+      "metadataVersion": "1.4.0+mc1.21.1",
+      "modId": "factory_blocks",
+      "sha1": "51fa93c3b0978f4f7e3b801bea6822ec72522e50",
+      "sha256": "404080fcf4747c6d84b73d1c204d047408aae476f57752bc5f38e9c16c7f51cd",
+      "sha512": "2273baa299f4f829a2f17f5409a8f206aad87abef65f62e3d20c63be85281f217f64f2ecaed60063fa8c8a457ec6d63eb40778dec3c318af5a70741704b43cc1",
+      "sizeBytes": 809234,
+      "sourceUseLane": "independently-authored/resource-interpreter",
+      "verificationRole": "consumer-resource-owner"
+    },
+    {
+      "curseForgeFileId": 8061947,
+      "curseForgeFingerprint": 669268138,
+      "curseForgeProjectId": 841890,
+      "filename": "athena-neoforge-1.21.1-4.0.6.jar",
+      "license": "MIT",
+      "metadataVersion": "4.0.6",
+      "modId": "athena",
+      "modrinthProjectId": "b1ZV3DIJ",
+      "modrinthVersionId": "dJgL278E",
+      "sha1": "4bcbdf388bd5e387beca7c627224aac33584b55b",
+      "sha256": "43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5",
+      "sha512": "ab40a306a26ce834daae921a1e87768cd2538a4bfe27a4480f97af854084cc334e7416b1bd0b7583834a32a86951283f29fd4b1df7b98a967a6b26a3ec05e2cf",
+      "sizeBytes": 99944,
+      "verificationRole": "renderer-format-identity"
+    }
+  ],
+  "baseline": {
+    "java": 21,
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.248",
+    "packRepositoryCommit": "c7bb230f21d14d26859d0b92548f089b3a493ad9",
+    "packVersion": "1.2.0"
+  },
+  "requiredForStaticRendering": [
+    "factory_blocks",
+    "athena"
+  ],
+  "schemaVersion": 1
+}
