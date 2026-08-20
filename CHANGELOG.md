@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.1 - 2026-08-20
 
 - Add the exact Factory Blocks `1.4.0+mc1.21.1` and Athena `4.0.6` profile for
   All the Mons 1.2.0.
@@ -13,4 +13,5 @@
 - Add a small 25-placement staging gallery with CTM, giant, gears, and stock
   controls.
 
-No runtime, owner-acceptance, publication, or release identity is claimed yet.
+- Freeze the owner-accepted 86,501-byte production JAR, exact input pair,
+  3,707-byte gallery archive, Maven metadata, and release provenance.

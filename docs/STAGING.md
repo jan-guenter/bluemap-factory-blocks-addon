@@ -1,7 +1,10 @@
 # Disposable staging gate
 
-Status: not run for the Factory Blocks candidate. This file records the small
-owner-review procedure, not a result.
+Status: passed and owner accepted on 2026-08-20 for commit
+`236ff727f18694d1b7509a763fdafe2375768e05`, tree
+`47c816c8a5b3cbc41ee682dcd6a210ad492ad4d9`, and the exact 86,501-byte JAR
+with SHA-256
+`69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302`.
 
 Reuse only the authorized disposable All the Mons 1.2.0 staging server. Before
 changing it, snapshot the current accepted staging state for rollback. Install
@@ -42,3 +45,10 @@ Keep the matching Minecraft staging server running for direct comparison.
 Record the candidate JAR size/SHA, gallery package identity, pod identity and
 restart count, verifier scores, map name, link check, and owner response only
 after observing them. Do not publish before explicit owner acceptance.
+
+The exact 3,707-byte gallery archive had SHA-256
+`cbea339239d7ddcfd2a771de204d64ba63e1941d28e74416c51919c32888e25b`.
+Immediate, 20-tick, and 100-tick verification each passed 26 checks with zero
+failures. The bounded Factory Blocks map and matching modded-client rendering
+were visually accepted. These are disposable staging results, not production
+deployment evidence.
