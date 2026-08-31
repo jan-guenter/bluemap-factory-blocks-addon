@@ -2,16 +2,16 @@
 
 [![CI](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml)
 
-An exact-profile BlueMap 5.22 add-on for the Athena-backed connected models in
+An exact-profile BlueMap 5.23 feature-backport add-on for the Athena-backed connected models in
 Factory Blocks as shipped by All the Mons 1.2.0.
 
 ## Status
 
-Version `0.1.0-alpha.1` is the owner-accepted prerelease candidate. Its exact
-production JAR is 86,501 bytes with SHA-256
-`69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302`.
-The disposable staging render and matching modded-client comparison were
-accepted on 2026-08-20. Publication does not deploy it to a Minecraft server.
+Version `0.1.0-alpha.2` is the owner-accepted BlueMap 5.23 migration release
+candidate. It preserves the alpha.1 renderer while replacing duplicate adapter
+and Athena model primitives with exact source-module pins. Its production JAR
+is 90,486 bytes with SHA-256
+`bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0`.
 
 The only supported input tuple is:
 
@@ -22,8 +22,10 @@ The only supported input tuple is:
   SHA-256
   `43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5`;
 - Minecraft `1.21.1`, NeoForge `21.1.248`, Java `21`;
-- BlueMap backport `5.22-agent.backport-5.22-mc1.21.1-2` at commit
-  `9be321df995a1103808621d529eb72773e719d4d`.
+- BlueMap feature backport
+  `5.22-feature.backport-5.23-stateless-java-web-server-46` at commit
+  `7e07f4e74ec1e92a6ead9aa1e66054af3e133aac`, API commit
+  `285c9a60eff3ac2b0cab308ce1058d1565be0971`.
 
 The route begins inactive. It activates only when both installed JARs and the
 active owned JSON schemas match the exact profile. A changed artifact,
@@ -67,15 +69,17 @@ All three retained-placement phases passed 26/26 checks with zero failures.
 
 ## Build
 
-Use Java 21, the exact sibling BlueMap checkout, and the two operator-supplied
-artifacts:
+Clone recursively, then use Java 21, the exact BlueMap checkout, and the two
+operator-supplied artifacts. The build rejects missing, dirty, or incorrectly
+pinned support modules.
 
 ```bash
 python3 -B -m unittest discover -s tools/tests -v
 gradle --no-daemon \
+  -PbluemapSourcePath=/absolute/path/to/bluemap-backport \
   -PfactoryBlocksJar=/absolute/path/factory_blocks-neoforge-1.4.0+mc1.21.1.jar \
   -PathenaJar=/absolute/path/athena-neoforge-1.21.1-4.0.6.jar \
-  test jar verifyProductionJar verifyPinnedArtifacts
+  clean prototypeCheck build
 ```
 
 The exact release gate is documented in [docs/RELEASING.md](docs/RELEASING.md).

@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: MIT */
 package io.github.janguenter.bluemap.factoryblocks.model;
 
+import io.github.janguenter.bluemap.resource.athena.model.CubeFace;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;

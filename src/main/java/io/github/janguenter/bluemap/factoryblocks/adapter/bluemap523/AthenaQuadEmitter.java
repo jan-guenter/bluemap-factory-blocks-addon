@@ -5,7 +5,7 @@
  * behavior-only exact-profile oracle. Third-party models and textures remain
  * operator-installed and are referenced only by resource key.
  */
-package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap522;
+package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap523;
 
 import de.bluecolored.bluemap.core.map.TextureGallery;
 import de.bluecolored.bluemap.core.map.hires.RenderSettings;
@@ -20,7 +20,7 @@ import de.bluecolored.bluemap.core.util.math.Color;
 import de.bluecolored.bluemap.core.world.BlockProperties;
 import de.bluecolored.bluemap.core.world.block.BlockNeighborhood;
 import de.bluecolored.bluemap.core.world.block.ExtendedBlock;
-import io.github.janguenter.bluemap.factoryblocks.model.CubeFace;
+import io.github.janguenter.bluemap.resource.athena.model.CubeFace;
 
 /** Emits deterministic face-local quads with cropped geometry-locked UVs. */
 final class AthenaQuadEmitter {

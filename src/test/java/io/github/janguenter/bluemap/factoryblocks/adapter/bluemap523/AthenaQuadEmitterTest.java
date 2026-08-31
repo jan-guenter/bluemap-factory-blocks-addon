@@ -1,12 +1,12 @@
 /* SPDX-License-Identifier: MIT */
-package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap522;
+package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap523;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.janguenter.bluemap.factoryblocks.model.CubeFace;
+import io.github.janguenter.bluemap.resource.athena.model.CubeFace;
 import de.bluecolored.bluemap.core.util.math.Color;
 import org.junit.jupiter.api.Test;
 
