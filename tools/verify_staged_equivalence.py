@@ -61,7 +61,7 @@ def main() -> int:
             for entry, expected, actual in changed
         )
         raise SystemExit(f"Accepted entry bytes changed:\n{detail}")
-    if "Implementation-Version: 0.1.0-alpha.1\r\n" not in manifest:
+    if "Implementation-Version: 0.1.0-alpha.2\r\n" not in manifest:
         raise SystemExit("Final release manifest version is missing or incorrect")
     if "SNAPSHOT" in manifest:
         raise SystemExit("Final release manifest contains SNAPSHOT")

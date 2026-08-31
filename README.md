@@ -7,10 +7,10 @@ Factory Blocks as shipped by All the Mons 1.2.0.
 
 ## Status
 
-Version `0.1.0-alpha.2` is an unpublished BlueMap 5.23 migration candidate.
-It preserves the owner-accepted alpha.1 renderer while replacing duplicate
-adapter and Athena model primitives with exact source-module pins. Its
-production JAR is 90,486 bytes with SHA-256
+Version `0.1.0-alpha.2` is the owner-accepted BlueMap 5.23 migration release
+candidate. It preserves the alpha.1 renderer while replacing duplicate adapter
+and Athena model primitives with exact source-module pins. Its production JAR
+is 90,486 bytes with SHA-256
 `bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0`.
 
 The only supported input tuple is:

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "unpublished-migration-candidate",
+  "status": "owner-accepted-release-candidate",
   "published": false,
   "version": "0.1.0-alpha.2",
   "release_date": "2026-08-31",
@@ -82,6 +82,51 @@
     "gallery_sources_changed": false,
     "runtime_profile_and_renderer_behavior_changed": false
   },
+  "owner_accepted_staging": {
+    "visual_acceptance": true,
+    "accepted_on": "2026-08-31",
+    "scope": "Owner accepted the five-add-on aggregate batch containing the Factory Blocks 0.1.0-alpha.2 renderer candidate.",
+    "integration_run": "bluemap-atmons-integration-20260831-next-batch-523-native",
+    "candidate": {
+      "source_commit": "36889360a609c541acc5781fca3612c3a20da626",
+      "source_tree": "645ec9b31e00a3c858353a1df21d54727d473797",
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.jar",
+      "size": 90486,
+      "sha256": "bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0",
+      "manifest_sha256": "87c9fa61548c109a770bce5dfb8867b6d8c2985b0f9c7b42b0da5c14b936f432",
+      "candidate_pack_inventory_sha256": "8db4f362fad57b3f45b19ebb83bc6349c6869b91d429620432728816a86b2bac"
+    },
+    "runtime_suite": {
+      "file_name": "runtime-suite.json",
+      "sha256": "140a3128a37b4cda7d858f41466e7a8b8d4ac8c2e6269d38f46355834e9348ee",
+      "status": "passed",
+      "gallery_count": 51,
+      "passed": 51,
+      "failed": 0,
+      "runtime_attestation_sha256": "ed21fafd20230e838ce378d1783be66569893243ce63c98221686f873be4a9b8",
+      "factory_blocks_verification": {
+        "status": "passed",
+        "mirrored_checks": 26,
+        "pre_verification_failures": 0,
+        "failures": 0
+      }
+    },
+    "gallery_render": {
+      "file_name": "gallery-render.json",
+      "file_sha256": "e66a09d8592bd37ec546f5c48ba077a4597aff9287365f4eeed6b9da150a1627",
+      "map_id": "atmons_integration",
+      "composition_id": "2b54af980b42ec29eaf6a5747c9f31157d2b6208fcbb5a8083c982d9387b1c7f",
+      "layout_sha256": "390ad0b3e559dd6545c9ef8400bd2c4879fed35039b0fcdfcc0411e6ee17a8c0",
+      "fresh_tile_evidence_sha256": "ed107c3f407e5667a5cf4b8b32edb60f090242863501418a19bfdbf76397cf89",
+      "region_count": 4,
+      "tile_count": 589
+    },
+    "browser_capture": {
+      "file_name": "factory-blocks.png",
+      "screenshot_sha256": "eb2faea67bfb68ec646a3db6c185464a1fa7d41d4978966e8106cd356398b118",
+      "navigation_status": 200
+    }
+  },
   "verification": {
     "exact_input_gate": true,
     "production_archive_boundary_gate": true,
@@ -89,6 +134,38 @@
     "exact_feature_backport_runtime_identity_gate": true,
     "gradle_9_6_1_clean_build": true,
     "consumer_tests_passed": 32,
-    "checkstyle": true
+    "checkstyle": true,
+    "actionlint": true,
+    "release_candidate_gate": true,
+    "aggregate_runtime_suite": true,
+    "candidate_artifact_identity_preserved": true
+  },
+  "metadata_seal": {
+    "renderer_sources_changed": false,
+    "gallery_sources_changed": false,
+    "accepted_production_jar_sha256": "bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0",
+    "accepted_sources_jar_sha256": "892c0ea95d8d203065f037a7f40c56600393e9ca911ae0e59ab1aaa31f84b346"
+  },
+  "final_release_artifacts": {
+    "production_jar": {
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.jar",
+      "size": 90486,
+      "sha256": "bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0"
+    },
+    "sources_jar": {
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2-sources.jar",
+      "size": 55073,
+      "sha256": "892c0ea95d8d203065f037a7f40c56600393e9ca911ae0e59ab1aaa31f84b346"
+    },
+    "pom": {
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.pom",
+      "size": 1373,
+      "sha256": "aaab32190aed8ef26d1a360a8cedf46550d1d06ce3b3f49f7ae0535ab00ccbfd"
+    },
+    "gradle_module": {
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.module.json",
+      "size": 2866,
+      "sha256": "42833f27034c316b54abe4a96293adf4ecb50064db199b843c4f98449ea62cbf"
+    }
   }
 }
