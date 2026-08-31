@@ -1,6 +1,6 @@
-# ADR 0001: adapt the proven MIT interpreter without a shared runtime
+# ADR 0001: share pure model and adapter sources without a runtime dependency
 
-Status: accepted for the unreleased Factory Blocks prototype.
+Status: superseded by the BlueMap 5.23 migration.
 
 ## Context
 
@@ -10,15 +10,13 @@ BlueMap 5.23 feature-backport adapter boundary, reversible emission, and stock f
 by Factory Blocks. Factory Blocks adds a small, distinct resource roster and
 uses Athena's 3×3 rather than 2×2 giant model.
 
-BlueMap loads each pack in a separate classloader. A mandatory shared runtime
-would couple otherwise independent consumer add-ons and is not justified for
-this prototype.
+The portfolio later proved stable, identical pure primitives across multiple
+consumers. BlueMap still loads each pack independently, so the reusable code
+must be compiled into each add-on rather than installed as a shared runtime.
 
 ## Decision
 
-Adapt the MIT BlueMap Chisel Add-on at tag `v0.1.0-alpha.1`, commit
-`f9131a5143062e2045cf26823aabb8628bb5d94d`, into this standalone repository.
-Specialize it with:
+Keep the standalone add-on and specialize the Chisel-derived renderer with:
 
 - unique `bluemap_factory_blocks:*` registrations;
 - the exact Factory Blocks 1.4.0/Athena 4.0.6 artifact pair;
@@ -27,6 +25,6 @@ Specialize it with:
 - deterministic frame zero for the five routed gears roles.
 
 No Factory Blocks, Athena, CTM, or Chisel content source or assets are copied.
-The interpreter remains compiled into this one deployable JAR. Revisit a
-shared source extraction only after another concrete consumer proves the same
-API and failure semantics.
+Compile the exact Adapter API and Athena Resource Models gitlink-pinned source
+trees into this one deployable JAR. Do not add standalone module JARs to the
+server or nest them in the add-on.

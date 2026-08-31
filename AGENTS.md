@@ -10,7 +10,7 @@ not part of the root orchestration repository.
 | --- | --- |
 | All the Mons | `1.2.0`, pack commit `c7bb230f21d14d26859d0b92548f089b3a493ad9` |
 | Minecraft / NeoForge / Java | `1.21.1` / `21.1.248` / `21` |
-| BlueMap | backport `5.22-feature.backport-5.23-stateless-java-web-server-46`, commit `7e07f4e74ec1e92a6ead9aa1e66054af3e133aac` |
+| BlueMap | feature backport `5.22-feature.backport-5.23-stateless-java-web-server-46`, commit `7e07f4e74ec1e92a6ead9aa1e66054af3e133aac`, API `285c9a60eff3ac2b0cab308ce1058d1565be0971` |
 | Factory Blocks | `1.4.0+mc1.21.1`, 809,234 bytes, SHA-256 `404080fcf4747c6d84b73d1c204d047408aae476f57752bc5f38e9c16c7f51cd` |
 | Athena | `4.0.6`, 99,944 bytes, SHA-256 `43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5` |
 
@@ -34,6 +34,8 @@ starts a fresh evidence and visual-review task.
   stock fallback or propagation of a capacity exception.
 - Bundle no Factory Blocks, Athena, CTM, Chisel, or Minecraft code or assets.
   The CTM mod and Chisel content JAR are not build or activation inputs.
+- Compile only the exact Adapter API and Athena Resource Models source pins;
+  the standalone module JARs are not runtime dependencies or nested content.
 - The implementation adapts only the owner's MIT BlueMap Chisel Add-on at tag
   `v0.1.0-alpha.1`, commit
   `f9131a5143062e2045cf26823aabb8628bb5d94d`.
@@ -48,9 +50,10 @@ gate after owner visual acceptance.
 ```bash
 python3 -B -m unittest discover -s tools/tests -v
 gradle --no-daemon \
+  -PbluemapSourcePath=/absolute/path/to/bluemap-backport \
   -PfactoryBlocksJar=/absolute/path/factory_blocks-neoforge-1.4.0+mc1.21.1.jar \
   -PathenaJar=/absolute/path/athena-neoforge-1.21.1-4.0.6.jar \
-  test jar verifyProductionJar verifyPinnedArtifacts
+  clean prototypeCheck build
 ```
 
 Do not record staging, browser, owner-acceptance, publication, or release

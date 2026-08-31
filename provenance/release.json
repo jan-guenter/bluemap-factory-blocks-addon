@@ -1,84 +1,94 @@
 {
   "schema_version": 1,
-  "status": "owner-accepted-release-candidate",
-  "version": "0.1.0-alpha.1",
-  "release_date": "2026-08-20",
+  "status": "unpublished-migration-candidate",
+  "published": false,
+  "version": "0.1.0-alpha.2",
+  "release_date": "2026-08-31",
   "repository": "https://github.com/jan-guenter/bluemap-factory-blocks-addon",
-  "tag": "v0.1.0-alpha.1",
-  "maven_coordinate": "io.github.jan-guenter:bluemap-factory-blocks-addon:0.1.0-alpha.1",
-  "owner_accepted_staging": {
-    "commit": "236ff727f18694d1b7509a763fdafe2375768e05",
-    "tree": "47c816c8a5b3cbc41ee682dcd6a210ad492ad4d9",
-    "production_jar_size": 86501,
-    "production_jar_sha256": "69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302",
-    "visual_acceptance": true,
-    "gallery_checks": "26/26 with zero failures at immediate, 20-tick, and 100-tick phases"
-  },
-  "final_release_artifacts": {
+  "tag": "v0.1.0-alpha.2",
+  "maven_coordinate": "io.github.jan-guenter:bluemap-factory-blocks-addon:0.1.0-alpha.2",
+  "candidate_artifacts": {
     "production_jar": {
-      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.1.jar",
-      "size": 86501,
-      "sha256": "69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302"
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.jar",
+      "size": 90486,
+      "sha256": "bfa0c9aa6a96425fa62a5acf3a4a4e5c212e6537378da5bc8e1f59c19d09b0a0"
     },
     "sources_jar": {
-      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.1-sources.jar",
-      "size": 51485,
-      "sha256": "c94167752f16ddc6b5f3bf9c711ca719dcedb1a9bb437fc8b9e65f3149072613"
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2-sources.jar",
+      "size": 55073,
+      "sha256": "892c0ea95d8d203065f037a7f40c56600393e9ca911ae0e59ab1aaa31f84b346"
     },
     "pom": {
-      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.1.pom",
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.pom",
       "size": 1373,
-      "sha256": "eb1a67ad49ba54f28ea28fa10966fc30f1913f294ef20c861881596247b6f300"
+      "sha256": "aaab32190aed8ef26d1a360a8cedf46550d1d06ce3b3f49f7ae0535ab00ccbfd"
     },
     "gradle_module": {
-      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.1.module.json",
+      "file_name": "bluemap-factory-blocks-addon-0.1.0-alpha.2.module.json",
       "size": 2866,
-      "sha256": "14cb9927206ce573f4af4306adced9e2167c9194402131973629cc4a7b2479bb"
-    },
-    "sha256sums": {
-      "file_name": "SHA256SUMS",
-      "size": 476,
-      "sha256": "bdfa39e4e0a67b286962fc0de65862b8c4c1b347a46dda35dc50d0947b179c89"
+      "sha256": "42833f27034c316b54abe4a96293adf4ecb50064db199b843c4f98449ea62cbf"
     }
   },
-  "staged_equivalence": {
-    "entry_manifest": "provenance/accepted-staging-entries.sha256",
-    "identical_non_manifest_entries": 42,
-    "whole_jar_byte_identical": true
+  "baseline_release": {
+    "version": "0.1.0-alpha.1",
+    "tag": "v0.1.0-alpha.1",
+    "production_jar_size": 86501,
+    "production_jar_sha256": "69f4f53022aac455a4bcc362dc09cbaf5b3f73cf108ccc154dffa8e238869302",
+    "owner_visual_acceptance": true
   },
-  "gallery": {
-    "archive_file_name": "bluemap-factory-blocks-gallery.zip",
-    "size": 3707,
-    "sha256": "cbea339239d7ddcfd2a771de204d64ba63e1941d28e74416c51919c32888e25b",
-    "placements": 25,
-    "assertions_per_phase": 26,
-    "phases": 3,
-    "published_as_release_asset": false
+  "adapter_api_migration": {
+    "repository": "https://github.com/jan-guenter/bluemap-addon-adapter-api",
+    "version": "0.1.0-alpha.2",
+    "tag": "v0.1.0-alpha.2",
+    "release_target_commit": "e81f08bc4bfbf02d810ec8949a019130e2e61634",
+    "source_tree": "2f974c9bb2ba13888d69682f86f30f58922d30eb",
+    "target_bluemap_version": "5.22-feature.backport-5.23-stateless-java-web-server-46",
+    "bluemap_commit": "7e07f4e74ec1e92a6ead9aa1e66054af3e133aac",
+    "bluemap_api_commit": "285c9a60eff3ac2b0cab308ce1058d1565be0971",
+    "tested_source_commit": "9e2c841e0cf9f7a3653f9f7d68bad94b8eaa8b88",
+    "tested_source_tree": "6df3083b38650085ce7b5b03482377bd11b5f613",
+    "compiled_source_count": 4,
+    "standalone_module_jar_bundled": false,
+    "standalone_module_jar_nested": false,
+    "standalone_module_jar_installed": false,
+    "local_adapter_package": "io.github.janguenter.bluemap.factoryblocks.adapter.bluemap523",
+    "displaced_local_helpers": [
+      "AdapterCompatibility",
+      "inline registry admission methods",
+      "FactoryBlocksResourceExtensionType"
+    ]
   },
-  "ephemeral_ci_inputs": {
-    "factory_blocks": {
-      "curseforge_project": 640001,
-      "curseforge_file": 6266334,
-      "size": 809234,
-      "sha256": "404080fcf4747c6d84b73d1c204d047408aae476f57752bc5f38e9c16c7f51cd"
-    },
-    "athena": {
-      "curseforge_project": 841890,
-      "curseforge_file": 8061947,
-      "size": 99944,
-      "sha256": "43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5"
-    },
-    "policy": "Downloaded only into the ephemeral runner, verified before use, and never bundled or uploaded."
+  "athena_model_migration": {
+    "repository": "https://github.com/jan-guenter/bluemap-athena-resource-models",
+    "version": "0.1.0-alpha.1",
+    "tag": "v0.1.0-alpha.1",
+    "release_target_commit": "4a503a63f7f10b7c414c6c1228207a5ba00bfd54",
+    "source_tree": "882689c2f9a0875547f4e30aefd68659103d5046",
+    "compiled_source_count": 4,
+    "standalone_module_jar_bundled": false,
+    "standalone_module_jar_nested": false,
+    "standalone_module_jar_installed": false,
+    "displaced_local_classes": [
+      "CtmConnections",
+      "CtmSelector",
+      "CtmTextureRole",
+      "CubeFace"
+    ]
+  },
+  "preserved_contract": {
+    "routed_block_count": 35,
+    "ctm_block_count": 32,
+    "giant_block_count": 3,
+    "gallery_sources_changed": false,
+    "runtime_profile_and_renderer_behavior_changed": false
   },
   "verification": {
-    "production_jar_exact_byte_gate": true,
-    "sources_jar_exact_byte_gate": true,
-    "publication_metadata_exact_byte_gate": true,
-    "gallery_archive_exact_byte_gate": true,
-    "exact_input_pair_gate": true
-  },
-  "immutable_packaged_provenance": {
-    "path": "provenance/upstreams.json",
-    "note": "Implementation provenance packaged in the accepted JAR remains byte-identical. Release-only identities are kept outside the JAR."
+    "exact_input_gate": true,
+    "production_archive_boundary_gate": true,
+    "sources_archive_boundary_gate": true,
+    "exact_feature_backport_runtime_identity_gate": true,
+    "gradle_9_6_1_clean_build": true,
+    "consumer_tests_passed": 32,
+    "checkstyle": true
   }
 }

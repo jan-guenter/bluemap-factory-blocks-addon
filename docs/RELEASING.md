@@ -12,9 +12,10 @@ checkout, and the two exact local artifacts:
 ```bash
 python3 -B -m unittest discover -s tools/tests -v
 gradle --no-daemon \
+  -PbluemapSourcePath=/absolute/path/to/bluemap-backport \
   -PfactoryBlocksJar=/absolute/path/factory_blocks-neoforge-1.4.0+mc1.21.1.jar \
   -PathenaJar=/absolute/path/athena-neoforge-1.21.1-4.0.6.jar \
-  -PreleaseTag=v0.1.0-alpha.1 \
+  -PreleaseTag=v0.1.0-alpha.2 \
   clean check build generatePomFileForAddonPublication \
   generateMetadataFileForAddonPublication verifyPublicationArtifacts \
   verifyReleaseCandidate
