@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jan-guenter/bluemap-factory-blocks-addon/actions/workflows/ci.yml)
 
-An exact-profile BlueMap 5.22 add-on for the Athena-backed connected models in
+An exact-profile BlueMap 5.23 feature-backport add-on for the Athena-backed connected models in
 Factory Blocks as shipped by All the Mons 1.2.0.
 
 ## Status
@@ -22,8 +22,8 @@ The only supported input tuple is:
   SHA-256
   `43699885bbce3343916d4c5c4940cf0e3f9f6f02fdeb46e8655e121b42282ec5`;
 - Minecraft `1.21.1`, NeoForge `21.1.248`, Java `21`;
-- BlueMap backport `5.22-agent.backport-5.22-mc1.21.1-2` at commit
-  `9be321df995a1103808621d529eb72773e719d4d`.
+- BlueMap backport `5.22-feature.backport-5.23-stateless-java-web-server-46` at commit
+  `7e07f4e74ec1e92a6ead9aa1e66054af3e133aac`.
 
 The route begins inactive. It activates only when both installed JARs and the
 active owned JSON schemas match the exact profile. A changed artifact,

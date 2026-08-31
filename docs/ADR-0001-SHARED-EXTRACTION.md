@@ -6,7 +6,7 @@ Status: accepted for the unreleased Factory Blocks prototype.
 
 The owner's published MIT BlueMap Chisel Add-on already implements the
 Athena 4.0.6 CTM resource semantics, exact artifact/schema activation,
-BlueMap 5.22 adapter boundary, reversible emission, and stock fallback needed
+BlueMap 5.23 feature-backport adapter boundary, reversible emission, and stock fallback needed
 by Factory Blocks. Factory Blocks adds a small, distinct resource roster and
 uses Athena's 3×3 rather than 2×2 giant model.
 

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: MIT
  */
-package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap522;
+package io.github.janguenter.bluemap.factoryblocks.adapter.bluemap523;
 
 import de.bluecolored.bluemap.core.map.TextureGallery;
 import de.bluecolored.bluemap.core.map.hires.MaxCapacityReachedException;
@@ -16,13 +16,13 @@ import de.bluecolored.bluemap.core.util.math.Color;
 import de.bluecolored.bluemap.core.world.BlockState;
 import de.bluecolored.bluemap.core.world.block.BlockNeighborhood;
 import io.github.janguenter.bluemap.factoryblocks.activation.FactoryBlocksRuntime;
-import io.github.janguenter.bluemap.factoryblocks.model.CtmConnections;
-import io.github.janguenter.bluemap.factoryblocks.model.CtmTextureRole;
-import io.github.janguenter.bluemap.factoryblocks.model.CubeFace;
 import io.github.janguenter.bluemap.factoryblocks.model.GiantTextureSelector;
 import io.github.janguenter.bluemap.factoryblocks.profile.FactoryBlocks140Athena406Profile;
 import io.github.janguenter.bluemap.factoryblocks.profile.FactoryBlocksDefinition;
 import io.github.janguenter.bluemap.factoryblocks.profile.LoaderFamily;
+import io.github.janguenter.bluemap.resource.athena.model.CtmConnections;
+import io.github.janguenter.bluemap.resource.athena.model.CtmTextureRole;
+import io.github.janguenter.bluemap.resource.athena.model.CubeFace;
 
 import java.util.function.Consumer;
 

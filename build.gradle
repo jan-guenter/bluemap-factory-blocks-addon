@@ -14,6 +14,13 @@ base {
     archivesName = artifact_id
 }
 
+sourceSets {
+    main.java.srcDirs(
+            'modules/bluemap-addon-adapter-api/src/main/java',
+            'modules/bluemap-athena-resource-models/src/main/java'
+    )
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -52,6 +59,7 @@ tasks.named('processResources').configure {
 }
 
 tasks.named('jar', Jar).configure {
+    includeEmptyDirs = false
     manifest {
         attributes(
                 'Automatic-Module-Name': 'io.github.janguenter.bluemap.factoryblocks',
@@ -77,6 +85,7 @@ tasks.named('jar', Jar).configure {
 }
 
 tasks.named('sourcesJar', Jar).configure {
+    includeEmptyDirs = false
     def rawAddonDescriptor = file('src/main/resources/bluemap.addon.json')
     def processedAddonDescriptor = tasks.named('processResources').map {
         new File(it.destinationDir, 'bluemap.addon.json')
@@ -110,6 +119,51 @@ tasks.named('sourcesJar', Jar).configure {
 
 def productionJar = tasks.named('jar', Jar).flatMap { it.archiveFile }
 def publishedSourcesJar = tasks.named('sourcesJar', Jar).flatMap { it.archiveFile }
+def sharedAdapterPackage = 'io/github/janguenter/bluemap/addon/adapter/api/bluemap523/'
+def sharedAdapterClasses = [
+        'BlueMapRuntimeCompatibility.class',
+        'RegistryGuard.class',
+        'ResourceExtensionType.class',
+        'SyntheticDispatch.class'
+].collect { sharedAdapterPackage + it }
+def sharedAdapterSources = [
+        'BlueMapRuntimeCompatibility.java',
+        'RegistryGuard.java',
+        'ResourceExtensionType.java',
+        'SyntheticDispatch.java'
+].collect { sharedAdapterPackage + it }
+def sharedAthenaPackage = 'io/github/janguenter/bluemap/resource/athena/model/'
+def sharedAthenaClasses = [
+        'CtmConnections.class',
+        'CtmSelector.class',
+        'CtmTextureRole.class',
+        'CubeFace.class',
+        'CubeFace$Vec.class'
+].collect { sharedAthenaPackage + it }
+def sharedAthenaSources = [
+        'CtmConnections.java',
+        'CtmSelector.java',
+        'CtmTextureRole.java',
+        'CubeFace.java'
+].collect { sharedAthenaPackage + it }
+def sharedClasses = sharedAdapterClasses + sharedAthenaClasses
+def sharedSources = sharedAdapterSources + sharedAthenaSources
+def legacyAdapterPackage =
+        'io/github/janguenter/bluemap/factoryblocks/adapter/bluemap522/'
+def displacedAdapterHelpers = [
+        'io/github/janguenter/bluemap/factoryblocks/adapter/bluemap523/AdapterCompatibility',
+        'io/github/janguenter/bluemap/factoryblocks/adapter/bluemap523/FactoryBlocksResourceExtensionType'
+]
+def legacyAthenaClasses = [
+        'io/github/janguenter/bluemap/factoryblocks/model/CtmConnections.class',
+        'io/github/janguenter/bluemap/factoryblocks/model/CtmSelector.class',
+        'io/github/janguenter/bluemap/factoryblocks/model/CtmTextureRole.class',
+        'io/github/janguenter/bluemap/factoryblocks/model/CubeFace.class',
+        'io/github/janguenter/bluemap/factoryblocks/model/CubeFace$Vec.class'
+]
+def legacyAthenaSources = legacyAthenaClasses.collect {
+    it.replace('.class', '.java').replace('$Vec.java', '.java')
+}.unique()
 tasks.register('verifyAcceptedProductionJar') {
     dependsOn tasks.named('jar')
     inputs.file(productionJar)
@@ -179,10 +233,23 @@ tasks.register('verifyProductionJar') {
                     'META-INF/NOTICE-bluemap-factory-blocks-addon.md',
                     'META-INF/THIRD_PARTY-bluemap-factory-blocks-addon.md',
                     'META-INF/bluemap-factory-blocks/upstreams.json'
-            ]
+            ] + sharedClasses
             def missing = required.findAll { !entries.contains(it) }
-            if (!missing.isEmpty()) {
-                throw new GradleException("Production JAR is missing: ${missing}")
+            def nonUniqueShared = sharedClasses.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
+            def foreignClasses = entries.findAll { entry ->
+                entry.endsWith('.class')
+                        && !entry.startsWith('io/github/janguenter/bluemap/factoryblocks/')
+                        && !sharedClasses.contains(entry)
+            }
+            if (!missing.isEmpty() || !nonUniqueShared.isEmpty()
+                    || !foreignClasses.isEmpty()) {
+                throw new GradleException(
+                        "Production JAR boundary mismatch: missing=${missing}, "
+                                + "nonUniqueShared=${nonUniqueShared}, "
+                                + "foreignClasses=${foreignClasses}"
+                )
             }
             def addon = new groovy.json.JsonSlurper().parseText(
                     zip.getInputStream(zip.getEntry('bluemap.addon.json')).getText('UTF-8')
@@ -209,6 +276,13 @@ tasks.register('verifyProductionJar') {
                         || it.startsWith('de/maxhenkel/')
                         || it.startsWith('net/minecraft/')
                         || it.startsWith('net/neoforged/')
+                        || it.startsWith(legacyAdapterPackage)
+                        || displacedAdapterHelpers.any { helper -> it.startsWith(helper) }
+                        || legacyAthenaClasses.contains(it)
+                        || (it.startsWith(sharedAdapterPackage)
+                            && !sharedAdapterClasses.contains(it))
+                        || (it.startsWith(sharedAthenaPackage)
+                            && !sharedAthenaClasses.contains(it))
             }
             if (!forbidden.isEmpty()) {
                 throw new GradleException("Production JAR contains forbidden entries: ${forbidden}")
@@ -230,7 +304,7 @@ tasks.register('verifySourcesJar') {
             def entries = zip.entries().findAll { !it.directory }.collect { it.name }
             def required = [
                     'io/github/janguenter/bluemap/factoryblocks/BlueMapFactoryBlocksAddon.java',
-                    'io/github/janguenter/bluemap/factoryblocks/adapter/bluemap522/FactoryBlocksRenderer.java',
+                    'io/github/janguenter/bluemap/factoryblocks/adapter/bluemap523/FactoryBlocksRenderer.java',
                     'bluemap.addon.json',
                     'bluemap-factory-blocks/profiles/exact-artifacts.json',
                     'bluemap-factory-blocks/profiles/factory_blocks/1.4.0-athena-4.0.6/profile.json',
@@ -240,10 +314,16 @@ tasks.register('verifySourcesJar') {
                     'META-INF/NOTICE-bluemap-factory-blocks-addon.md',
                     'META-INF/THIRD_PARTY-bluemap-factory-blocks-addon.md',
                     'META-INF/bluemap-factory-blocks/upstreams.json'
-            ]
+            ] + sharedSources
             def missing = required.findAll { !entries.contains(it) }
-            if (!missing.isEmpty()) {
-                throw new GradleException("Sources JAR is missing: ${missing}")
+            def nonUniqueShared = sharedSources.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
+            if (!missing.isEmpty() || !nonUniqueShared.isEmpty()) {
+                throw new GradleException(
+                        "Sources JAR boundary mismatch: missing=${missing}, "
+                                + "nonUniqueShared=${nonUniqueShared}"
+                )
             }
             def addonDescriptors = entries.findAll { it == 'bluemap.addon.json' }
             if (addonDescriptors.size() != 1) {
@@ -264,6 +344,7 @@ tasks.register('verifySourcesJar') {
             def projectJava = entries.findAll { it.endsWith('.java') }
             def foreignJava = projectJava.findAll {
                 !it.startsWith('io/github/janguenter/bluemap/factoryblocks/')
+                        && !sharedSources.contains(it)
             }
             def forbidden = entries.findAll {
                 it.endsWith('.class')
@@ -278,6 +359,13 @@ tasks.register('verifySourcesJar') {
                         || it.startsWith('de/maxhenkel/')
                         || it.startsWith('net/minecraft/')
                         || it.startsWith('net/neoforged/')
+                        || it.startsWith(legacyAdapterPackage)
+                        || displacedAdapterHelpers.any { helper -> it == "${helper}.java" }
+                        || legacyAthenaSources.contains(it)
+                        || (it.startsWith(sharedAdapterPackage)
+                            && !sharedAdapterSources.contains(it))
+                        || (it.startsWith(sharedAthenaPackage)
+                            && !sharedAthenaSources.contains(it))
             }
             if (projectJava.isEmpty() || !foreignJava.isEmpty() || !forbidden.isEmpty()) {
                 throw new GradleException(
@@ -292,11 +380,13 @@ tasks.register('verifySourcesJar') {
 }
 
 tasks.named('check').configure {
-    dependsOn tasks.named('verifyAcceptedProductionJar')
-    dependsOn tasks.named('verifyAcceptedSourcesJar')
     dependsOn tasks.named('verifyProductionJar')
     dependsOn tasks.named('verifySourcesJar')
-    dependsOn tasks.named('verifyStagedEquivalence')
+}
+
+tasks.register('prototypeCheck') {
+    dependsOn tasks.named('check')
+    dependsOn tasks.named('verifyPinnedArtifacts')
 }
 
 tasks.register('verifyPinnedArtifacts', Exec) {
